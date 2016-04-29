@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+
+
+using System.Diagnostics;
+
 
 namespace KaijiBot
 {
@@ -10,6 +15,11 @@ namespace KaijiBot
     {
         static void Main(string[] args)
         {
+            var connector = new Proxy.ProcessConnector();
+            var id = connector.Connect("chrome");
+            var ts = new Proxy.GameProxy(id);
+            while (true) ;
+
         }
     }
 }
