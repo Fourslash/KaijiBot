@@ -1,0 +1,7 @@
+﻿{
+  "username": "fourslash",
+  "password":  "123",
+  "database": "GBF",
+  "host": "localhost",
+  "dialect": "postgres"
+}
