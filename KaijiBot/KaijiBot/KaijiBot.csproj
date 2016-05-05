@@ -69,9 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicJson.cs" />
+    <Compile Include="Game\ApiAnswers\DoubleRetire.cs" />
     <Compile Include="Game\Card.cs" />
-    <Compile Include="Game\DealResult.cs" />
-    <Compile Include="Game\DrawResult.cs" />
+    <Compile Include="Game\ApiAnswers\DealResult.cs" />
+    <Compile Include="Game\ApiAnswers\DoubleEnd.cs" />
+    <Compile Include="Game\ApiAnswers\DoubleStart.cs" />
+    <Compile Include="Game\ApiAnswers\DrawResult.cs" />
+    <Compile Include="Game\DecisionMaking\DoubleDecisionMaker.cs" />
     <Compile Include="Game\EventEmitter.cs" />
     <Compile Include="Game\Table.cs" />
     <Compile Include="Program.cs" />

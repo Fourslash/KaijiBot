@@ -20,6 +20,7 @@ namespace KaijiBot
             var ts = new Proxy.GameProxy(id);
             // ts.Dispose();
             var gameEventEmmiter = new Game.EventEmitter(ts);
+            var table = new Game.Table(gameEventEmmiter);
            while (true) ;
 
         }       

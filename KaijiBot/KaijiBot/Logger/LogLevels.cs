@@ -26,7 +26,7 @@ namespace KaijiBot.Logger
         public static LogLevel Trace = new LogLevel("TRACE", LogLevelEnum.Trace, ConsoleColor.Blue);
         public static LogLevel Verbose = new LogLevel("VERBOSE", LogLevelEnum.Verbose, ConsoleColor.Magenta);
         public static LogLevel Debug = new LogLevel("DEBUG", LogLevelEnum.Debug, ConsoleColor.Cyan);
-        public static LogLevel Info = new LogLevel("INFO", LogLevelEnum.Info, ConsoleColor.DarkBlue);
+        public static LogLevel Info = new LogLevel("INFO", LogLevelEnum.Info, ConsoleColor.White);
         public static LogLevel Warn = new LogLevel("WARN", LogLevelEnum.Warn, ConsoleColor.Yellow);
         public static LogLevel Success = new LogLevel("SUCCESS", LogLevelEnum.Success, ConsoleColor.Green);
         public static LogLevel Error = new LogLevel("ERROR", LogLevelEnum.Info, ConsoleColor.Red);

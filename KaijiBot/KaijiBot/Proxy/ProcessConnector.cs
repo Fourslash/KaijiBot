@@ -59,7 +59,8 @@ namespace KaijiBot.Proxy
             this.name = name;
             process.EnableRaisingEvents = true;
             process.Exited += Process_Exited;
-
+            Logger.LoggerContoller.ProcessLogger
+                .Info(string.Format("Connected to \"{0}\" {1}", name, process.Id));
             return process.Id;
         }
 

@@ -40,10 +40,6 @@ namespace KaijiBot.Logger
             Log(LogLevels.Info, message);
         }
 
-        public void Success(string message)
-        {
-            Log(LogLevels.Success, message);
-        }
 
         public void Warn(string message)
         {

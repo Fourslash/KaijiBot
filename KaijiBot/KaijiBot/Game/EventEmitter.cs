@@ -9,7 +9,6 @@ using Codeplex.Data;
 
 namespace KaijiBot.Game
 {
-    enum ApiEvents { Retire, Draw, Deal }
 
     class EventEmitter
     {
@@ -19,6 +18,15 @@ namespace KaijiBot.Game
 
         public delegate void DR (DrawResult result);
         public event DR Draw;
+
+        public delegate void DBS(DoubleStart result);
+        public event DBS DoubleStart;
+
+        public delegate void DBE(DoubleEnd result);
+        public event DBE DoubleEnd;
+
+        public delegate void DBR(DoubleRetire result);
+        public event DBR DoubleRetire;
 
         private GameProxy proxy_;
         public EventEmitter(GameProxy proxy)
@@ -31,11 +39,11 @@ namespace KaijiBot.Game
         private void ProcessData(string jsonString, string url)
         {            
             var data = DynamicJson.Parse(jsonString);
-            LoggerContoller.GameLogger.Debug(url);
+            LoggerContoller.GameLogger.Verbose(url);
             string type = getEventType(url);
 
 
-            LoggerContoller.GameLogger.Debug(type);
+            LoggerContoller.GameLogger.Debug(String.Format("current action: {0}", type));
             switch (type)
             {
                 case "poker_draw":
@@ -44,8 +52,15 @@ namespace KaijiBot.Game
                 case "poker_deal":
                     ProcessDeal(jsonString);
                     break;
-                /*case "poker_double_retire":
-                    return ApiEvents.Retire;*/
+                case "poker_double_retire":
+                    ProcessDoubleRetire(jsonString);
+                    break;
+                case "poker_double_start":
+                    ProcessDoubleStart(jsonString);
+                    break;
+                case "poker_double_result":
+                    ProcessDoubleEnd(jsonString);
+                    break;
                 default:
                     // throw new Exception(String.Format("Unknown api event: {0}", type));
                     LoggerContoller.GameLogger.Error(type);
@@ -68,6 +83,33 @@ namespace KaijiBot.Game
             if (Deal != null)
             {
                 Deal(dealResult);
+            }
+        }
+
+        private void ProcessDoubleStart(string json)
+        {
+            var start = new DoubleStart(json);
+            if (DoubleStart != null)
+            {
+                DoubleStart(start);
+            }
+        }
+
+        private void ProcessDoubleEnd(string json)
+        {
+            var end = new DoubleEnd(json);
+            if (DoubleEnd != null)
+            {
+                DoubleEnd(end);
+            }
+        }
+
+        private void ProcessDoubleRetire(string json)
+        {
+            var retire = new DoubleRetire(json);
+            if (DoubleRetire != null)
+            {
+                DoubleRetire(retire);
             }
         }
 
