@@ -29,6 +29,15 @@ namespace KaijiBot.Game
         public event DBR DoubleRetire;
 
         private GameProxy proxy_;
+
+        public System.Diagnostics.Process Process
+        {
+            get
+            {
+                return proxy_.GameProcess;
+            }
+        }
+
         public EventEmitter(GameProxy proxy)
         {
             proxy_ = proxy;
@@ -62,9 +71,7 @@ namespace KaijiBot.Game
                     ProcessDoubleEnd(jsonString);
                     break;
                 default:
-                    // throw new Exception(String.Format("Unknown api event: {0}", type));
-                    LoggerContoller.GameLogger.Error(type);
-                    break;
+                    throw new Exception(String.Format("Unknown api event: {0}", type));
             }
         }
 

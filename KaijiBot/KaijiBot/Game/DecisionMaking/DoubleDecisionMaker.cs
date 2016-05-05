@@ -79,7 +79,7 @@ namespace KaijiBot.Game.DecisionMaking
         {
             var list = Enum.GetValues(typeof(Ranks))
                 .Cast<Ranks>().ToList();
-            list.Remove(Ranks.Jocker);
+            list.Remove(Ranks.Joker);
             return list.ToArray();
         }
 

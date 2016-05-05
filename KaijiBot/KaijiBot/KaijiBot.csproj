@@ -75,9 +75,13 @@
     <Compile Include="Game\ApiAnswers\DoubleEnd.cs" />
     <Compile Include="Game\ApiAnswers\DoubleStart.cs" />
     <Compile Include="Game\ApiAnswers\DrawResult.cs" />
+    <Compile Include="Game\DecisionMaking\DealDecisionMaker.cs" />
     <Compile Include="Game\DecisionMaking\DoubleDecisionMaker.cs" />
     <Compile Include="Game\EventEmitter.cs" />
     <Compile Include="Game\Table.cs" />
+    <Compile Include="Game\TableClicker.cs" />
+    <Compile Include="MouseBullshit\WindowFinder.cs" />
+    <Compile Include="MouseBullshit\MouseClicker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\GameProxy.cs" />

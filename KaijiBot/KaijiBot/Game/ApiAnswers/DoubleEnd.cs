@@ -14,14 +14,21 @@ namespace KaijiBot.Game
         public int Turn { get; set; }
         public DoubleResults Result { get; set; }
         public bool NextGameFlag { get; set; }
+        public bool NextGame
+        {
+            get
+            {                
+                return NextGameFlag && Result != DoubleResults.Lose;
+            }
+        }
         public Card SecondCard { get; set; }
         public DoubleEnd(string json) : base (json)
         {
             SecondCard = new Card(data.card_second);
-            MedalDiff = Convert.ToInt32(data.pay_medal);
             Turn = Convert.ToInt32(data.turn);
             NextGameFlag = data.next_game_flag;
             Result = GetResult(data.result);
+            MedalDiff = Convert.ToInt32(data.pay_medal);
         }
 
         private DoubleResults GetResult(string res)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace KaijiBot.Game
 {
     enum Suits { Spade = 1, Heart = 2, Diamond = 3, Club = 4, Joker = 99 }
-    enum Ranks { _2 =2, _3 = 3, _4 = 4, _5 =5,  _6 = 6, _7 = 7, _8 = 8, _9 = 9, _10 = 10, Jack = 11, Queen = 12, King = 13, Ace = 14, Jocker = 99}
+    enum Ranks { _2 =2, _3 = 3, _4 = 4, _5 =5,  _6 = 6, _7 = 7, _8 = 8, _9 = 9, _10 = 10, Jack = 11, Queen = 12, King = 13, Ace = 14, Joker = 99}
     class Card
     {
         public Suits Suit { get; set; }
@@ -30,5 +30,21 @@ namespace KaijiBot.Game
             string suit = raw.Split('_')[0];
             return (Suits)Convert.ToInt32(suit);
         }
+
+        public static bool isEqualSuit(Card a, Card b)
+        {
+            return a.Suit == Suits.Joker ||
+                b.Suit == Suits.Joker ||
+                a.Suit == b.Suit;
+        }
+
+        public static bool isEqualRank(Card a, Card b)
+        {
+            return a.Rank == Ranks.Joker ||
+                b.Rank == Ranks.Joker ||
+                a.Rank== b.Rank;
+        }
+        
+
     }
 }

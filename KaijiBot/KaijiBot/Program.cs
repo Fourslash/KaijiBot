@@ -16,12 +16,11 @@ namespace KaijiBot
         static void Main(string[] args)
         {
             var connector = new Proxy.ProcessConnector();
-            var id = connector.Connect("chrome");
-            var ts = new Proxy.GameProxy(id);
-            // ts.Dispose();
+            var prc = connector.Connect("chrome");
+            var ts = new Proxy.GameProxy(prc);
             var gameEventEmmiter = new Game.EventEmitter(ts);
             var table = new Game.Table(gameEventEmmiter);
-           while (true) ;
+            while (true) ;
 
         }       
     }

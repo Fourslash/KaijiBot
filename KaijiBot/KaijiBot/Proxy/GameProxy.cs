@@ -5,18 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Fiddler;
 using System.IO;
+using System.Diagnostics;
 
 namespace KaijiBot.Proxy
 {
     class GameProxy : IDisposable
     {
         private int ProcessID {get; set;}
+        public Process GameProcess { get; set; }
         public delegate void UI(string jsonString, string apiString);
         public event UI NewDataCollected;
 
-        public GameProxy(int processId)
+        public GameProxy(Process process)
         {
-            this.ProcessID = processId;
+
+            ProcessID = process.Id;
+            GameProcess = process;
             FiddlerStart();
 
         }
@@ -38,20 +42,17 @@ namespace KaijiBot.Proxy
             {
 
                 #region settings
-
                 FiddlerApplication.Prefs.SetBoolPref("fiddler.network.streaming.abortifclientaborts", true);
                 FiddlerCoreStartupFlags oFCSF = FiddlerCoreStartupFlags.Default;
-                //FiddlerCoreStartupFlags.
                 Fiddler.FiddlerApplication.Startup(0, oFCSF);
                 #endregion
 
                 Fiddler.FiddlerApplication.BeforeRequest += BeforeRequest;
                 Fiddler.FiddlerApplication.BeforeResponse += BeforeResponse;
-                //LogWriter.WriteLogSucces("Fiddler started");
+
             }
             catch (Exception ex)
             {
-                //LogWriter.WriteLogOnException(ex);
                 throw ex;
             }
 
@@ -81,14 +82,23 @@ namespace KaijiBot.Proxy
             } else if (!oS.oResponse.MIMEType.Equals("application/json"))
             {
                 return false;
-            } else if (!oS.PathAndQuery.Contains("/casino_poker"))
+            }
+            WriteAccessLog(oS.PathAndQuery);
+            if (!oS.PathAndQuery.Contains("/casino_poker"))
             {
                 return false;
             } else
             {
                 return true;
             }
+        }
 
+        void WriteAccessLog(string uri)
+        {
+            using (StreamWriter sw = File.AppendText(@"AccessLog.txt"))
+            {
+                sw.WriteLine(String.Format("[{0}] {1}", DateTime.Now, uri));
+            }
         }
 
         void ProcessSession(Session oS)
@@ -100,16 +110,10 @@ namespace KaijiBot.Proxy
                 using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
                 {
                     string json = readStream.ReadToEnd();
-                    //Logger.LoggerContoller.ProxyLogger.Debug(json);
                     if (NewDataCollected != null)
                     {
                         this.NewDataCollected(json, oS.url);
                     }
-                    //string jsonStr = readStream.ReadToEnd().Remove(0, 7);
-                    //string apiStr = oS.PathAndQuery;
-                    //var json = DynamicJson.Parse(str);
-                    //NewDataCollected(jsonStr, apiStr);
-
                 }
             }
         }

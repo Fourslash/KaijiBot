@@ -44,14 +44,14 @@ namespace KaijiBot.Proxy
     class ProcessConnector
     {
 
-        private Process process { get; set; }
+        public Process process { get; set; }
         private string name { get; set; }
 
         public ProcessConnector()
         {
 
         }
-        public int Connect(string name)
+        public Process Connect(string name)
         {
             Logger.LoggerContoller.ProcessLogger
                 .Debug(string.Format("Finding process \"{0}\"", name));
@@ -61,7 +61,7 @@ namespace KaijiBot.Proxy
             process.Exited += Process_Exited;
             Logger.LoggerContoller.ProcessLogger
                 .Info(string.Format("Connected to \"{0}\" {1}", name, process.Id));
-            return process.Id;
+            return process;
         }
 
         private void Process_Exited(object sender, EventArgs e)

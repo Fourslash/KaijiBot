@@ -8,8 +8,15 @@ namespace KaijiBot.Logger
 {
     class LoggerContoller
     {
-        public static Logger ProxyLogger = new Logger("Proxy", LogLevelEnum.Debug);
-        public static Logger ProcessLogger = new Logger("Process", LogLevelEnum.Verbose);
-        public static Logger GameLogger = new Logger("GameLogger", LogLevelEnum.Verbose);
+#if (DEBUG)
+        static LogLevelEnum logLevel = LogLevelEnum.Verbose;
+#else
+        static LogLevelEnum logLevel = LogLevelEnum.Info;
+#endif
+
+
+        public static Logger ProxyLogger = new Logger("Proxy", logLevel);
+        public static Logger ProcessLogger = new Logger("Process", logLevel);
+        public static Logger GameLogger = new Logger("GameLogger", logLevel);
     }
 }
