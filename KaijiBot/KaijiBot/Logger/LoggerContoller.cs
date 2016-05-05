@@ -10,5 +10,6 @@ namespace KaijiBot.Logger
     {
         public static Logger ProxyLogger = new Logger("Proxy", LogLevelEnum.Debug);
         public static Logger ProcessLogger = new Logger("Process", LogLevelEnum.Verbose);
+        public static Logger GameLogger = new Logger("GameLogger", LogLevelEnum.Verbose);
     }
 }

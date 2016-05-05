@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KaijiBot.Game
+{
+    enum Suits { Spade = 1, Heart = 2, Diamond = 3, Club = 4, Joker = 99 }
+    enum Ranks { _6 = 6, _7 = 7, _8 = 8, _9 = 9, _10 = 10, Jack = 11, Queen = 12, King = 13, Ace = 14, Jocker = 99}
+    class Card
+    {
+        public Suits Suit { get; set; }
+        public Ranks Rank { get; set; }
+        public Card (string raw)
+        {
+            Suit = getSuit(raw);
+            Rank = getRank(raw);
+        }
+
+        private Ranks getRank(string raw)
+        {
+            Int32 rank = Convert.ToInt32(raw.Split('_')[1]);
+            rank = rank == 1 ? 14 : rank; // fix bullshit
+            return (Ranks)rank;
+        }
+
+        private Suits getSuit(string raw)
+        {
+            string suit = raw.Split('_')[0];
+            return (Suits)Convert.ToInt32(suit);
+        }
+    }
+}

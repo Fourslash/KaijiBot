@@ -54,7 +54,7 @@ namespace KaijiBot.Proxy
         public int Connect(string name)
         {
             Logger.LoggerContoller.ProcessLogger
-                .Debug(string.Format("Findnding process \"{0}\"", name));
+                .Debug(string.Format("Finding process \"{0}\"", name));
             this.process = FindProcess(name);
             this.name = name;
             process.EnableRaisingEvents = true;

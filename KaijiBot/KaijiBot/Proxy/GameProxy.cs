@@ -8,11 +8,11 @@ using System.IO;
 
 namespace KaijiBot.Proxy
 {
-    class GameProxy
+    class GameProxy : IDisposable
     {
         private int ProcessID {get; set;}
         public delegate void UI(string jsonString, string apiString);
-        public static event UI NewDataCollected;
+        public event UI NewDataCollected;
 
         public GameProxy(int processId)
         {
@@ -20,11 +20,18 @@ namespace KaijiBot.Proxy
             FiddlerStart();
 
         }
+
+        ~GameProxy()
+        {
+            Dispose();
+        }
+        
         public void Dispose()
         {
-            //LogWriter.WriteLog("Shutting down Fiddler");
+            Logger.LoggerContoller.ProxyLogger.Info("Shutting down Fiddler");
             Fiddler.FiddlerApplication.Shutdown();
-        }
+        } 
+
         void FiddlerStart()
         {
             try
@@ -92,9 +99,12 @@ namespace KaijiBot.Proxy
             {
                 using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8))
                 {
-                    //Console.WriteLine(string.Format("Processing {0}", oS.PathAndQuery));
-                    string tmp = readStream.ReadToEnd();
-                    Logger.LoggerContoller.ProxyLogger.Debug(tmp);
+                    string json = readStream.ReadToEnd();
+                    //Logger.LoggerContoller.ProxyLogger.Debug(json);
+                    if (NewDataCollected != null)
+                    {
+                        this.NewDataCollected(json, oS.url);
+                    }
                     //string jsonStr = readStream.ReadToEnd().Remove(0, 7);
                     //string apiStr = oS.PathAndQuery;
                     //var json = DynamicJson.Parse(str);
