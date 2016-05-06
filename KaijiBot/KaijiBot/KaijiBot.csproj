@@ -60,6 +60,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,8 +81,9 @@
     <Compile Include="Game\EventEmitter.cs" />
     <Compile Include="Game\Table.cs" />
     <Compile Include="Game\TableClicker.cs" />
-    <Compile Include="MouseBullshit\WindowFinder.cs" />
-    <Compile Include="MouseBullshit\MouseClicker.cs" />
+    <Compile Include="LowLevelBullshit\KeyHook.cs" />
+    <Compile Include="LowLevelBullshit\WindowFinder.cs" />
+    <Compile Include="LowLevelBullshit\MouseClicker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\GameProxy.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KaijiBot.MouseBullshit
+namespace KaijiBot.LowLevelBullshit
 {
     class MouseClicker
     {

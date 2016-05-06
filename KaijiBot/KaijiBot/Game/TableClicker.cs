@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using KaijiBot.MouseBullshit;
+using KaijiBot.LowLevelBullshit;
 using KaijiBot.Game.DecisionMaking;
 
 namespace KaijiBot.Game
