@@ -60,10 +60,8 @@ namespace KaijiBot.Proxy
 
         void BeforeRequest(Session oSession)
         {
-            var procName = oSession.LocalProcess.ToLower();
-            if (procName.Contains("skypebot2") || 
-                procName.Contains("SeijaTelegram"))
-            {
+           if (oSession.LocalProcessID != this.ProcessID)
+            {               
                 oSession.Ignore();
             }
         }
@@ -77,12 +75,8 @@ namespace KaijiBot.Proxy
         }
 
         bool IsSessionNeedsProcessed(Session oS)
-        {
-            if (oS.LocalProcessID != this.ProcessID)
-                return false;
-
+        {            
             WriteAccessLog(oS.PathAndQuery);
-
             if (!oS.oResponse.MIMEType.Equals("application/json"))
                 return false;
             if (!oS.PathAndQuery.Contains("/casino_poker"))
