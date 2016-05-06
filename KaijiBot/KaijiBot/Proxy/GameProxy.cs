@@ -60,10 +60,12 @@ namespace KaijiBot.Proxy
 
         void BeforeRequest(Session oSession)
         {
-            /*if (oSession.LocalProcess.ToLower().Contains("skypebot2"))
+            var procName = oSession.LocalProcess.ToLower();
+            if (procName.Contains("skypebot2") || 
+                procName.Contains("SeijaTelegram"))
             {
                 oSession.Ignore();
-            }*/
+            }
         }
 
         void BeforeResponse(Session oS)

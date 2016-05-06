@@ -23,8 +23,21 @@ namespace KaijiBot.Game
     class TableClicker
     {
 
-        const int BUTTON_Y = 590;
+        const int BUTTON_Y = 575;
         const int CARD_Y = 380;
+        const int CARD_TIMEOUT = 400;
+        const int DRAW_TIMEOUT = 3100;
+
+        private int CardTimeout
+        {
+            get { return randomTimeout(CARD_TIMEOUT, 50); }
+        }
+
+        private int DrawTimeout
+        {
+            get { return randomTimeout(DRAW_TIMEOUT, 150); }
+        }
+
         private Process process;
         public TableClicker(Process proc)
         {
@@ -33,7 +46,7 @@ namespace KaijiBot.Game
 
         public void DrawClick(bool isWin)
         {
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(DrawTimeout);
             if (isWin)
                 ClickRight();
             else
@@ -42,7 +55,7 @@ namespace KaijiBot.Game
 
         public void DoubleStartClick(DecisionMaking.BetSides side)
         {
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(DrawTimeout);
             if (side == DecisionMaking.BetSides.High)
                 ClickLeft();
             else
@@ -51,13 +64,13 @@ namespace KaijiBot.Game
 
         public void RetireClick()
         {
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(DrawTimeout);
             ClickMiddle();
         }
 
         public void DoubleEndClick(bool playMore)
         {
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(DrawTimeout);
             if (playMore)
                 ClickRight();
             else
@@ -66,11 +79,11 @@ namespace KaijiBot.Game
 
         public void DealClick(int[] kept)
         {
-            System.Threading.Thread.Sleep(3000);
+            System.Threading.Thread.Sleep(DrawTimeout);
             foreach (var index in kept)
             {
                 ClickCard(index);
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(CardTimeout);
             }
             ClickMiddle();
         }
@@ -95,29 +108,46 @@ namespace KaijiBot.Game
                     throw new IndexOutOfRangeException();
             }
 
-            click(x, CARD_Y);
+            click(randomPoint(new Point(x, CARD_Y), 20));
         }
 
-        public void ClickMiddle()
+        private Point randomPoint(Point pt, int xOffset, int? yOffset = null)
         {
-            click(257, BUTTON_Y);
+            if (yOffset == null)
+                yOffset = xOffset;
+
+            Random rand = new Random();
+            var modifiedX = rand.Next(xOffset * -1, xOffset + 1) + pt.X;
+            var modifiedY = rand.Next((int)yOffset * -1, (int)yOffset + 1) + pt.Y;
+            return new Point(modifiedX, modifiedY);
         }
 
-        public void ClickLeft()
+        private int randomTimeout(int time, int offset)
         {
-            click(178, BUTTON_Y);
+            Random rand = new Random();
+            return time + rand.Next(offset * -1, offset + 1);
         }
 
-        public void ClickRight()
+        private void ClickMiddle()
         {
-            click(335, BUTTON_Y);
+            click(randomPoint(new Point(257, BUTTON_Y), 25, 10));
         }
 
-        private void click(int x, int y)
+        private void ClickLeft()
+        {
+            click(randomPoint(new Point(178, BUTTON_Y), 25, 10));
+        }
+
+        private void ClickRight()
+        {
+            click(randomPoint(new Point(335, BUTTON_Y), 25, 10));
+        }
+
+        private void click(Point p)
         {
             var wPoint = getWindowPoint();
-            var adjustedX = x + wPoint.X;
-            var adjustedY = y + wPoint.Y;
+            var adjustedX = p.X + wPoint.X;
+            var adjustedY = p.Y + wPoint.Y;
             MouseClicker.LeftMouseClick(adjustedX, adjustedY);
         }
 
