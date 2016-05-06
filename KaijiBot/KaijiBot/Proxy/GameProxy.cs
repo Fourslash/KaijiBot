@@ -77,20 +77,15 @@ namespace KaijiBot.Proxy
         bool IsSessionNeedsProcessed(Session oS)
         {
             if (oS.LocalProcessID != this.ProcessID)
-            {
                 return false;
-            } else if (!oS.oResponse.MIMEType.Equals("application/json"))
-            {
-                return false;
-            }
+
             WriteAccessLog(oS.PathAndQuery);
-            if (!oS.PathAndQuery.Contains("/casino_poker"))
-            {
+
+            if (!oS.oResponse.MIMEType.Equals("application/json"))
                 return false;
-            } else
-            {
-                return true;
-            }
+            if (!oS.PathAndQuery.Contains("/casino_poker"))
+                return false;
+            return true;
         }
 
         void WriteAccessLog(string uri)
