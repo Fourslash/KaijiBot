@@ -77,8 +77,6 @@ namespace KaijiBot.Proxy
         bool IsSessionNeedsProcessed(Session oS)
         {            
             WriteAccessLog(oS.PathAndQuery);
-            if (!oS.oResponse.MIMEType.Equals("application/json"))
-                return false;
             if (! (oS.PathAndQuery.Contains("/casino_poker") || oS.PathAndQuery.Contains("/captcha")))
                 return false;
             return true;
