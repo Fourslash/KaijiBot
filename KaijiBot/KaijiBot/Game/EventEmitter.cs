@@ -28,6 +28,8 @@ namespace KaijiBot.Game
         public delegate void DBR(DoubleRetire result);
         public event DBR DoubleRetire;
 
+        public event Action Captcha;
+
         private GameProxy proxy_;
 
         public System.Diagnostics.Process Process
@@ -69,6 +71,9 @@ namespace KaijiBot.Game
                     break;
                 case "poker_double_result":
                     ProcessDoubleEnd(jsonString);
+                    break;
+                case "image":
+                    Captcha();
                     break;
                 default:
                     throw new Exception(String.Format("Unknown api event: {0}", type));
@@ -123,7 +128,9 @@ namespace KaijiBot.Game
         private string getEventType(string url)
         {
             var type = url.Split('/')[2];
-            return type.Remove(type.IndexOf('?'));
+            if (type.IndexOf('?') != -1) 
+                type = type.Remove(type.IndexOf('?'));
+            return type;
         } 
     }
 }

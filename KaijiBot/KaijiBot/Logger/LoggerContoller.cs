@@ -15,8 +15,10 @@ namespace KaijiBot.Logger
 #endif
 
 
+        public static Logger MainLogger = new Logger("Main", logLevel);
         public static Logger ProxyLogger = new Logger("Proxy", logLevel);
         public static Logger ProcessLogger = new Logger("Process", logLevel);
         public static Logger GameLogger = new Logger("GameLogger", logLevel);
+        public static Logger TelegramLogger = new Logger("TelegramLogger", logLevel);
     }
 }

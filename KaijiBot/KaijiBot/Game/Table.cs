@@ -18,7 +18,10 @@ namespace KaijiBot.Game
         AwaitingDoubleEnd,
         DoubleEnd,
         AwaitingDoubleRetire,
-        DoubleRetire        
+        DoubleRetire,
+        AwaitingCaptcha,
+        EnteringCaptcha
+                   
     }
 
     class Table
@@ -51,7 +54,18 @@ namespace KaijiBot.Game
             emitter_.DoubleEnd += OnDoubleEnd;
             emitter_.DoubleRetire += OnDoubleRetire;
             emitter_.DoubleStart += OnDoubleStart;
-            emitter_.Draw += OnDraw;            
+            emitter_.Draw += OnDraw;
+            emitter_.Captcha += OnCaptcha;       
+        }
+
+        private void OnCaptcha()
+        {
+            State = TableStates.AwaitingCaptcha;
+            LoggerContoller.GameLogger.Info("Captcha detected.");
+            if (Settings.Config.Values.TelegramNotifications == true) {
+                Telegram.Messenger.SendMessage("Captcha detected. Please enter the captcha manually");
+            }
+
         }
 
         private void OnDraw(DrawResult result)
