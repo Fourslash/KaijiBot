@@ -76,18 +76,9 @@ namespace KaijiBot.Proxy
 
         bool IsSessionNeedsProcessed(Session oS)
         {            
-            WriteAccessLog(oS.PathAndQuery);
             if (! (oS.PathAndQuery.Contains("/casino_poker") || oS.PathAndQuery.Contains("/captcha")))
                 return false;
             return true;
-        }
-
-        void WriteAccessLog(string uri)
-        {
-            using (StreamWriter sw = File.AppendText(@"AccessLog.txt"))
-            {
-                sw.WriteLine(String.Format("[{0}] {1}", DateTime.Now, uri));
-            }
         }
 
         void ProcessSession(Session oS)
