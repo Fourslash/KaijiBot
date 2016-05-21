@@ -24,7 +24,7 @@ namespace KaijiBot.Proxy
             FiddlerStart();
 
         }
-
+         
         ~GameProxy()
         {
             Dispose();
