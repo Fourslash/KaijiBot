@@ -11,5 +11,5 @@ Add to your config.json lines
 }
 ```
 
-TelegramApiKey - api key for notification bot. Check https://telegram.me/botfather for details
+TelegramApiKey - api key for notification bot. Check https://telegram.me/botfather for details  
 TelegramTargetUserId - your telegram id. Dunno, google it
