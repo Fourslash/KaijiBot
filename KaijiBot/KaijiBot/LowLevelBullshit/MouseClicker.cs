@@ -18,7 +18,7 @@ namespace KaijiBot.LowLevelBullshit
         public const int MOUSEEVENTF_LEFTUP = 0x04;
 
         public static void LeftMouseClick(int xpos, int ypos)
-        {
+        {            
             SetCursorPos(xpos, ypos);
             mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
             //System.Threading.Thread.Sleep(500);

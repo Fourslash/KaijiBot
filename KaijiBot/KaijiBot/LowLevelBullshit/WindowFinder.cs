@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+
 namespace KaijiBot.LowLevelBullshit
 {
     class WindowFinder
@@ -22,12 +26,31 @@ namespace KaijiBot.LowLevelBullshit
             public int Bottom { get; set; }
         }
 
-        public static Rect GetWindow(System.Diagnostics.Process process)        
+        public static Rect GetWindow(Process process)        
         {
             IntPtr ptr = process.MainWindowHandle;
             Rect rect = new Rect();
             GetWindowRect(ptr, ref rect);
             return rect;
+        }
+
+        public static Bitmap MakeScreenshot(Process pr)
+        {
+            Logger.LoggerContoller.MainLogger.Debug("Taking screenshot");
+            var window = LowLevelBullshit.WindowFinder.GetWindow(pr);
+            int x = window.Left,
+                y = window.Top,
+                height = window.Bottom - window.Top,
+                width = window.Right - window.Left;
+
+            Rectangle bounds = new Rectangle(x, y, width, height);
+            Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
+            }            
+            bitmap.Save("captcha.jpg", ImageFormat.Jpeg);
+            return bitmap;
         }
     }
 }

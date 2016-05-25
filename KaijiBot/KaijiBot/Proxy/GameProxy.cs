@@ -75,10 +75,13 @@ namespace KaijiBot.Proxy
         }
 
         bool IsSessionNeedsProcessed(Session oS)
-        {            
-            if (! (oS.PathAndQuery.Contains("/casino_poker") || oS.PathAndQuery.Contains("/captcha")))
-                return false;
-            return true;
+        {
+            bool result = false;            
+            if (oS.PathAndQuery.Contains("/casino_poker")) 
+                result = true;
+            if (oS.PathAndQuery.Contains("/captcha"))
+                result = true;
+           return result;
         }
 
         void ProcessSession(Session oS)

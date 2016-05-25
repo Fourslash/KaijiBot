@@ -27,6 +27,9 @@ namespace KaijiBot.Game
         const int CARD_Y = 380;
         const int CARD_TIMEOUT = 400;
         const int DRAW_TIMEOUT = 3100;
+        const int CAPTCHA_TIMEOUT = 1000;
+        const int CAPTCHA_X = 205;
+        const int CAPTCHA_BUTTON_X = 384;
 
         private int CardTimeout
         {
@@ -36,6 +39,11 @@ namespace KaijiBot.Game
         private int DrawTimeout
         {
             get { return randomTimeout(DRAW_TIMEOUT, 150); }
+        }
+
+        private int CaptchaTimeout
+        {
+            get { return randomTimeout(CAPTCHA_TIMEOUT, 150); }
         }
 
         private Process process;
@@ -88,6 +96,17 @@ namespace KaijiBot.Game
             ClickMiddle();
         }
 
+        public void CaptchaClick(int yCoord)
+        {
+            System.Threading.Thread.Sleep(CaptchaTimeout);
+            click(randomPoint(new Point(CAPTCHA_X, yCoord), 100, 3));
+        }
+
+        public void CaptchaButtonClick(int yCoord)
+        {
+            System.Threading.Thread.Sleep(CaptchaTimeout);            
+            click(randomPoint(new Point(CAPTCHA_BUTTON_X, yCoord), 15, 2));
+        }
 
         public void ClickCard(int num)
         {

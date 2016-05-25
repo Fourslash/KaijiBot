@@ -10,6 +10,9 @@ using System.Security.Permissions;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Fiddler;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 
 namespace KaijiBot
@@ -48,6 +51,7 @@ namespace KaijiBot
             while (true) ;
         }
 
+        
 
         static bool ConsoleEventCallback(int eventType)
         {

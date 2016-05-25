@@ -29,6 +29,7 @@ namespace KaijiBot.Game
         public event DBR DoubleRetire;
 
         public event Action Captcha;
+        public event Action<CaptchaResult> CaptchaResult;
 
         private GameProxy proxy_;
 
@@ -49,7 +50,6 @@ namespace KaijiBot.Game
 
         private void ProcessData(string jsonString, string url)
         {            
-            var data = DynamicJson.Parse(jsonString);
             LoggerContoller.GameLogger.Verbose(url);
             string type = getEventType(url);
 
@@ -74,6 +74,9 @@ namespace KaijiBot.Game
                     break;
                 case "image":
                     Captcha();
+                    break;
+                case "input":
+                    CaptchaResult(new CaptchaResult(jsonString));
                     break;
                 default:
                     throw new Exception(String.Format("Unknown api event: {0}", type));

@@ -63,6 +63,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -85,6 +86,7 @@
   <ItemGroup>
     <Compile Include="DynamicJson.cs" />
     <Compile Include="Game\ApiAnswers\DoubleRetire.cs" />
+    <Compile Include="Game\ApiAnswers\CaptchaResult.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\ApiAnswers\DealResult.cs" />
     <Compile Include="Game\ApiAnswers\DoubleEnd.cs" />
@@ -95,7 +97,10 @@
     <Compile Include="Game\EventEmitter.cs" />
     <Compile Include="Game\Table.cs" />
     <Compile Include="Game\TableClicker.cs" />
+    <Compile Include="LowLevelBullshit\Key.cs" />
     <Compile Include="LowLevelBullshit\KeyHook.cs" />
+    <Compile Include="LowLevelBullshit\KeyPresser.cs" />
+    <Compile Include="LowLevelBullshit\PixelFinder.cs" />
     <Compile Include="LowLevelBullshit\WindowFinder.cs" />
     <Compile Include="LowLevelBullshit\MouseClicker.cs" />
     <Compile Include="Program.cs" />
