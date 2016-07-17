@@ -39,6 +39,10 @@ namespace KaijiBot.Game
                 LoggerContoller.GameLogger.Debug(
                     String.Format("Table state changed to {0}",
                     value.ToString()));
+                if (Settings.Config.Values.TelegramNotifications == true)
+                {
+                    Telegram.Messenger.CheckCommands();
+                }
                 state_ = value;
             }
         }
