@@ -12,6 +12,7 @@ namespace KaijiBot.Telegram
 {
     class Messenger
     {
+        private static bool isExiting = false;
         public static void SendMessage(string msg)
         {
             try {
@@ -19,6 +20,20 @@ namespace KaijiBot.Telegram
                 bot.SendTextMessage(Settings.Config.Values.TelegramTargetUserId, msg);
                 Logger.LoggerContoller.TelegramLogger.Debug(string.Format("Message \"{0}\" sent to target user", msg));
             } catch(Exception ex)
+            {
+                Logger.LoggerContoller.TelegramLogger.Error(ex);
+            }
+        }
+
+        public async static Task SendMessageAsync(string msg)
+        {
+            try
+            {
+                var bot = new Api(Settings.Config.Values.TelegramApiKey);
+                await bot.SendTextMessage(Settings.Config.Values.TelegramTargetUserId, msg);
+                Logger.LoggerContoller.TelegramLogger.Debug(string.Format("Message \"{0}\" sent to target user", msg));
+            }
+            catch (Exception ex)
             {
                 Logger.LoggerContoller.TelegramLogger.Error(ex);
             }
@@ -38,9 +53,15 @@ namespace KaijiBot.Telegram
             return await getCaptcha();
         }
 
-        private static void Eject()
-        {
-            Environment.Exit(0);
+        private static async void Eject()
+        {            
+            if (!isExiting)
+            {
+                isExiting = true;
+                Logger.LoggerContoller.MainLogger.Info("Stopped by remote user command");
+                await SendMessageAsync("Bot has been stopped");
+                Environment.Exit(0);
+            }
         }
 
         private static void CheckCommand(string command)
@@ -66,7 +87,7 @@ namespace KaijiBot.Telegram
                 updates = updates.Where(x => x.Message != null &&
                     x.Message.Type == MessageType.TextMessage &&
                     x.Message.Chat.Id == chatId &&                    
-                    (DateTime.UtcNow - x.Message.Date).TotalMinutes <= 5).ToArray();
+                    (DateTime.UtcNow - x.Message.Date).TotalMinutes <= 1).ToArray();
                 foreach (Update up in updates)
                 {
                     CheckCommand(up.Message.Text);
