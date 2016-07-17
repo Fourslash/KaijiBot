@@ -83,6 +83,7 @@ namespace KaijiBot.Telegram
             var chatId = (long)Convert.ToDouble(Settings.Config.Values.TelegramTargetUserId);
             while (offset != oldOffset)
             {
+                oldOffset = offset;
                 updates = await bot.GetUpdates(offset);
                 updates = updates.Where(x => x.Message != null &&
                     x.Message.Type == MessageType.TextMessage &&
